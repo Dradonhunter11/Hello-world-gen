@@ -1,4 +1,3 @@
-#include <stdio.h>
 #ifdef _WIN32
     #include <Windows.h>
     #include <conio.h>
@@ -7,6 +6,7 @@
     #include <termios.h>
 #endif
 #include <iostream>
+#include <string>
 #include <stdlib.h>
 #include <ctype.h>
 
@@ -75,7 +75,7 @@ public:
 		#ifdef _WIN32
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 		#else
-			std::cout << "\033[" << color << "m";
+			std::cout << "\033[0;" << color << "m";
 		#endif
 	}
 
@@ -116,13 +116,13 @@ public:
 		std::cout << "|---------------------------------------|" << std::endl;
 		std::cout << "\n                                       " << std::endl;
 		std::cout << "     1. Select your color                " << std::endl;
-		std::cout << "     2. Select effect                    " << std::endl;
+		std::cout << "     2. Select effect (TBD)              " << std::endl;
 		std::cout << "     3. Generate!                        " << std::endl;
 		std::cout << "\n                                       " << std::endl;
 		std::cout << "Created by DradonHunter11                " << std::endl;
 		std::cout << "Made work better yes please by HumanGamer" << std::endl;
 	}
-	static void drawColorChoice(Helloworld hw)
+	static void drawColorChoice(Helloworld& hw)
 	{
 		int code;
 		ConsoleUtil::clrscr();
