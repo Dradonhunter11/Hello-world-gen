@@ -57,7 +57,7 @@ public:
 			COORD p = { posX, posY };
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
 		#else
-			std::cout << "\033[<" << posY << ">;<" << posX << ">H";
+			std::cout << "\033[" << (posY+1) << ";" << (posX+1) << "H";
 		#endif
 	}
 
@@ -67,6 +67,7 @@ public:
 			system("cls");
 		#else
 			std::cout << "\033[2J";
+			changepos(0, 0);
 		#endif
 	}
 
@@ -90,7 +91,7 @@ private:
 public:
 	void generate()
 	{
-		ConsoleUtil::changepos(1, 21);
+		ConsoleUtil::changepos(0, 12);
 		ConsoleUtil::setColor(colorcode);
 		std::cout << "Hello world" << std::endl;
 		ConsoleUtil::setColor(15);
@@ -106,11 +107,8 @@ public:
 class Interface
 {
 public:
-	static void drawMenu(bool init) {
-		if (init)
-		{
-			ConsoleUtil::clrscr();
-		}
+	static void drawMenu() {
+		ConsoleUtil::clrscr();
 		std::cout << "|---------------------------------------|" << std::endl;
 		std::cout << "|       Hello world Generator C++       |" << std::endl;
 		std::cout << "|---------------------------------------|" << std::endl;
@@ -168,15 +166,13 @@ public:
 
 int main()
 {
-	bool init = false;
 	Helloworld hw;
 	Cursor cursor;
 	cursor.currentChoice = 1;
 	ConsoleUtil o1;
 	bool handle = false;
 	bool running = true;
-	Interface::drawMenu(init);
-	init = true;
+	Interface::drawMenu();
 
 	while(running)  
 	{
@@ -200,7 +196,7 @@ int main()
 			break;
 		case KEY_1 :
 			Interface::drawColorChoice(hw);
-			Interface::drawMenu(init);
+			Interface::drawMenu();
 			break;
 		case KEY_2 :
 			// TBD: Effects
