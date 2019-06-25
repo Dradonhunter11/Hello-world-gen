@@ -1,9 +1,8 @@
-#include <stdio>
+#include <stdio.h>
 #ifdef _WIN32
     #include <Windows.h>
     #include <conio.h>
 #else
-    //#include <ncurses.h>
     #include <unistd.h>
     #include <termios.h>
 #endif
@@ -11,21 +10,19 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-//#ifdef _WIN32
-    #define KEY_UP 72
-    #define KEY_DOWN 80
-    #define KEY_LEFT 75
-    #define KEY_RIGHT 77
-    #define KEY_ESCAPE 27
-    #define KEY_ENTER 13
-    #define KEY_1 49
-    #define KEY_2 50
-    #define KEY_3 51
-//#endif
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define KEY_ESCAPE 27
+#define KEY_ENTER 13
+#define KEY_1 49
+#define KEY_2 50
+#define KEY_3 51
 
 #ifndef _WIN32
 char getch(){
-    //return getchar();
+    // from: https://stackoverflow.com/questions/7469139/what-is-the-equivalent-to-getch-getche-in-linux
     char buf=0;
     struct termios old={0};
     fflush(stdout);
@@ -43,7 +40,7 @@ char getch(){
     old.c_lflag|=ECHO;
     if(tcsetattr(0, TCSADRAIN, &old)<0)
         perror ("tcsetattr ~ICANON");
-    //printf("%c\n",buf);
+    //printf("%c\n", buf); // not needed
     return buf;
  }
 #endif
@@ -114,16 +111,16 @@ public:
 		{
 			ConsoleUtil::clrscr();
 		}
-		std::cout << "|-----------------------------------|" << std::endl;
-		std::cout << "|       Hello world Generator C++   |" << std::endl;
-		std::cout << "|-----------------------------------|" << std::endl;
-		std::cout << "\n                                   " << std::endl;
-		std::cout << "     1. Select your color            " << std::endl;
-		std::cout << "     2. Select effect                " << std::endl;
-		std::cout << "     3. Generate!                    " << std::endl;
-		std::cout << "\n                                   " << std::endl;
-		std::cout << "Created by getfreecancer©            " << std::endl;
-		
+		std::cout << "|---------------------------------------|" << std::endl;
+		std::cout << "|       Hello world Generator C++       |" << std::endl;
+		std::cout << "|---------------------------------------|" << std::endl;
+		std::cout << "\n                                       " << std::endl;
+		std::cout << "     1. Select your color                " << std::endl;
+		std::cout << "     2. Select effect                    " << std::endl;
+		std::cout << "     3. Generate!                        " << std::endl;
+		std::cout << "\n                                       " << std::endl;
+		std::cout << "Created by DradonHunter11                " << std::endl;
+		std::cout << "Made work better yes please by HumanGamer" << std::endl;
 	}
 	static void drawColorChoice(Helloworld hw)
 	{
@@ -169,21 +166,8 @@ public:
 	}
 };
 
-void initLibs()
-{
-	#ifndef _WIN32
-		// NCurses Initialization
-		//initscr();
-		//raw();
-		//keypad(stdscr, TRUE);
-		//noecho();
-	#endif
-}
-
 int main()
 {
-	initLibs();
-
 	bool init = false;
 	Helloworld hw;
 	Cursor cursor;
@@ -210,18 +194,6 @@ int main()
 		case KEY_RIGHT :
 			std::cout << "VK_RIGHT detected" << std::endl;
 			break;
-		/*case KEY_ENTER :
-			if (cursor.currentChoice == 1) 
-			{
-				Interface::drawColorChoice(hw);
-				Interface::drawMenu(init);
-			}
-			if (cursor.currentChoice == 3) 
-			{
-				hw.generate();
-			}
-
-			break;*/
 		case KEY_ESCAPE :
 			std::cout << "ESCAPE detected" << std::endl;
 			running = false;
@@ -229,6 +201,9 @@ int main()
 		case KEY_1 :
 			Interface::drawColorChoice(hw);
 			Interface::drawMenu(init);
+			break;
+		case KEY_2 :
+			// TBD: Effects
 			break;
 		case KEY_3 :
 			hw.generate();
@@ -239,7 +214,6 @@ int main()
 		}
 		
 	}
-    //endwin();
 
     return 0;
 }
