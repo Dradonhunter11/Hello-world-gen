@@ -1,3 +1,13 @@
-# Hello world generator 0.1
+# Hello World Text Generator v0.2
 
-This program generate hello world in console, you can chose color and only that for now
+This program generates Hello World text in the console, you can choose the color and possibly effects in the future.
+
+## Build instructions
+```
+mkdir build
+cd build
+
+cmake ..
+
+make
+```
